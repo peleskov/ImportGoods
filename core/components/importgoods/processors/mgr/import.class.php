@@ -50,7 +50,7 @@ class ImportGoodsProcessor extends modProcessor
                         'pagetitle' => $csv[1],
                         'vendor' => $vendor->get('id'),
                         'price' => $csv[3],
-                        'content' => $csv[5],
+                        'content' => str_replace('‘', '', $csv[5]),
                         'size' => $sizes,
                     );
                     // Duplicate check
