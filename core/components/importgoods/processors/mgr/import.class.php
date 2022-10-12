@@ -17,7 +17,7 @@ class ImportGoodsProcessor extends modProcessor
             $pid = $this->getProperty('pid');
             $published = $this->getProperty('published');
             
-            if (!file_exists($csv_file) || ($handle = fopen($csv_file, "r")) === FALSE) {
+            if (!file_exists($csv_file) || ($handle = fopen($csv_file, "r")) === FALSE || !$this->modx->getObject('modResource', $pid)) {
                 return $this->failure();
             } else {
                 $rows = $created = $updated = $errors = 0;
@@ -35,6 +35,7 @@ class ImportGoodsProcessor extends modProcessor
                     $rows++;
                     $sizes = explode('||', $csv[4]);
                     $gallery = explode('||', $csv[6]);
+                    $tpl = $this->modx->getOption('ms2_template_product_default', null, 1);
                     $vendor_name = $csv[2];
                     if (!$vendor = $this->modx->getObject('msVendor', array('name' => $vendor_name))) {
                         $vendor = $this->modx->newObject('msVendor');
@@ -45,6 +46,7 @@ class ImportGoodsProcessor extends modProcessor
                         'class_key' => 'msProduct',
                         'context_key' => 'web',
                         'parent' => $pid,
+                        'template' => $tpl,
                         'published' => $published,
                         'article' => md5($csv[0]),
                         'pagetitle' => $csv[1],
@@ -52,7 +54,9 @@ class ImportGoodsProcessor extends modProcessor
                         'price' => $csv[3],
                         'content' => str_replace('‘', '', $csv[5]),
                         'size' => $sizes,
+                        'alias' => $csv[0],
                     );
+
                     // Duplicate check
                     $q = $this->modx->newQuery($data['class_key']);
                     $q->select($data['class_key'] . '.id');
@@ -90,14 +94,13 @@ class ImportGoodsProcessor extends modProcessor
                                     continue;
                                 }
                                 $image = pathinfo($csv_file, PATHINFO_DIRNAME) . '/imgs/' . $v;
-                                if (!file_exists($image)) {
-                                    $this->modx->log(1, "Could not import image \"$v\" to gallery. File \"$image\" not found on server.");
-                                } else {
+                                if (file_exists($image)) {
                                     $response = $this->modx->runProcessor(
                                         'gallery/upload',
                                         array('id' => $resource['id'], 'name' => $v, 'file' => $image),
                                         array('processors_path' => MODX_CORE_PATH . 'components/minishop2/processors/mgr/')
                                     );
+                                    unlink($image);
                                 }
                             }
                         }
