@@ -93,7 +93,7 @@ ImportGoods.panel.createImport = function (config) {
                             Ext.Msg.alert('Импорт завершен!', action.result.message);
                         },
                         failure: function (form, action) {
-                            Ext.Msg.alert('Ошибка!', _('importgoods_import_err_form'));
+                            Ext.Msg.alert('Ошибка!', (action?.result?.message === undefined)? _('importgoods_import_err_form'):action.result.message);
                         }
                     });
                 }
