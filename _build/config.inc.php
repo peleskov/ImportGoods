@@ -11,7 +11,7 @@ if (!defined('MODX_CORE_PATH')) {
 return [
     'name' => 'ImportGoods',
     'name_lower' => 'importgoods',
-    'version' => '1.0.3',
+    'version' => '2.0.4',
     'release' => 'pl',
     // Install package to site right after build
     'install' => true,
@@ -25,7 +25,7 @@ return [
         'policy_templates' => false,
         'resources' => false,
         'settings' => false,
-        'snippets' => false,
+        'snippets' => true,
         'templates' => false,
         'widgets' => false,
     ],

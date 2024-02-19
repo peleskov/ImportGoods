@@ -1,5 +1,37 @@
 Changelog for ImportGoods.
 
+2.0.4-beta
+==============
+- fix
+
+2.0.2-beta
+==============
+- fix
+
+2.0.1-beta
+==============
+- Добавил сниппет RemoveGoods для исполнения в Console
+
+2.0.0-beta
+==============
+- Добавил сниппет ImportGoods для исполнения в Console
+
+1.0.8-beta
+==============
+- fix
+
+1.0.7-beta
+==============
+- fix
+
+1.0.5-beta
+==============
+- fix
+
+1.0.4-beta
+==============
+- add categories
+
 1.0.3-beta
 ==============
 - fix
