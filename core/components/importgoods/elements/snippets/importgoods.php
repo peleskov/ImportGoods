@@ -151,7 +151,7 @@ class ImportGoods
                     $opt->set('measure_unit', '');
                     $opt->set('category', $cat_id);
                     if (!$opt->save()) {
-                        $modx->log(1, "Can not save option: " . $option['title']);
+                        //$modx->log(1, "Can not save option: " . $option['title']);
                         continue;
                     }
                 }
