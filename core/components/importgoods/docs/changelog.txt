@@ -2,6 +2,10 @@ Changelog for ImportGoods.
 
 2.0.5-beta
 ==============
+- Добавил сниппет ImportAdverts для исполнения PHP
+
+2.0.5-beta
+==============
 - fix
 
 2.0.2-beta
