@@ -21,7 +21,6 @@ class ImportAdverts
         $this->pid = $pid;
         $this->imgs_path = $imgs_path;
         $this->phpThumb = $this->modx->getService('modphpthumb', 'modPhpThumb', $this->modx->getOption('core_path') . 'model/phpthumb/', array());
-
     }
 
 
@@ -45,7 +44,7 @@ class ImportAdverts
         if (!$user = $modx->getObject('modUser', array('username' => $email))) {
             $user = $modx->newObject('modUser');
             $user->set('username', $email);
-            $user->set('password', 'qweR123$');
+            $user->set('password', $this->_generatePassword(8));
             $user->set('active', true);
         }
         if (!$profile = $user->getOne('Profile')) {
@@ -74,7 +73,17 @@ class ImportAdverts
 
         return $user->get('id');
     }
-
+    
+    function _generatePassword($length = 12)
+    {
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?';
+        $password = '';
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $chars[random_int(0, strlen($chars) - 1)];
+        }
+        return $password;
+    }
+    
     public function createAdvert($data)
     {
         $AdvertBoard = $this->modx->getService('AdvertBoard', 'AdvertBoard', $this->modx->getOption('core_path') . 'components/advertboard/model/');
